@@ -29,15 +29,41 @@ router.get('/', function(req, res, next) {
   });
 });
 
-//  처음 로그인을 시도하는 페이지 ( 회원가입은 현재 미포함)
-router.get('/login', function(req, res, next) {
+// 회원가입을 하는 페이지로 연결하는 라우터
+router.get('/register', function(req, res, next) {
 
   pool.getConnection(function(err, conn){
-    conn.query(`SELECT * FROM player ;`,function(err, results){
-      console.log(`로그인 체크할준비가 완료됨.`);
-      let count = 1;
-      res.render('login', { });
+    conn.query('SELECT * FROM player;',function(err, results){
+      res.render('register', { });
+
       conn.release();
+    });
+  });
+});
+
+//  처음 로그인을 시도하는 페이지 ( 회원가입은 현재 미포함)
+router.post('/login', function(req, res, next) {
+  pool.getConnection(function(err, conn){
+    const name = req.body.name ;
+    const age = req.body.age ;
+    const birth = req.body.birth ;
+    const adress = req.body.adress ;
+    const post = req.body.post ;
+    const hobby = req.body.hobby ;
+    const phone = req.body.phone ;
+    const email = req.body.email ;
+    const pw = req.body.pw ;
+    conn.query(`
+    INSERT INTO player 
+    (name,age,birth,adress,post,hobby,phone,email,pw) 
+    VALUES ('${name}',${age},'${birth}','${adress}','${post}','${hobby}','${phone}','${email}',md5('${pw}')); 
+    `,function(err, results){
+      if (err) {throw err;
+      } else {
+        console.log(`로그인 체크할준비가 완료됨.`);
+        res.render('login', { });
+        conn.release();
+      }
     });
   });
 });
