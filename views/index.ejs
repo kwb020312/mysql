@@ -3,19 +3,68 @@
   <head>
     <title>Test</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      td,th {
+        padding: 15px;
+      }
+    </style>
   </head>
   <body>
-    <table border="5" style="padding: 15px;">
-    <% for (const result of results) { %>
+    <table border=1; style="font-size: 18px; border-collapse: collapse">
         <tr>
+            <td>순서</td>
+            <td>이름</td>
+            <td>나이</td>
+            <td>생일</td>
+            <td>주소</td>
+            <td>우편번호</td>
+            <td>취미</td>
+            <td>핸드폰</td>
+            <td>이메일</td>
+            <td>비밀번호</td>
+          </tr>
+      <% for (const result of results) { %>
+        <tr>
+          <th>
+            <%= count %> 번째 순서
+          </th>
           <td>
-            이름
+              <%= result.name %>
           </td>
           <td>
-              <%= result.ENAME %>
+              <%= result.age %>
+          </td>
+          <td>
+              <%= result.birth %>
+          </td>
+          <td>
+              <%= result.adress %>
+          </td>
+          <td>
+              <%= result.post %>
+          </td>
+          <td>
+              <%= result.hobby %>
+          </td>
+          <td>
+              <%= result.phone %>
+          </td>
+          <td>
+              <%= result.email %>
+          </td>
+          <td>
+              <%= result.pw %>
+              <% count ++; %>
           </td>
         </tr>
       <% } %>
     </table>
+    <center>
+      <form action="/login">
+        <button >
+          다음페이지로
+        </button>
+      </form>
+    </center>
   </body>
 </html>
