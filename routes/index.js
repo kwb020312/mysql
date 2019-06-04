@@ -50,7 +50,7 @@ router.post('/lgcheck', function(req, res, next) {
     const password = req.body.passwords;
     conn.query(`SELECT * FROM player WHERE email = '${id}' AND pw = md5('${password}');`,function(err, results){
       console.log(`로그인 체크할준비가 완료됨.`);
-      // 현재 ID 만을 DB 에 있는지 확인할 수 있음
+      // ID 와 비밀번호를 체크하는 구문
       if(results.length > 0 ) {
         res.send(`
         <center>
