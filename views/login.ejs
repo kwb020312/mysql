@@ -24,22 +24,39 @@
                     <table>
                         <tr>
                             <td><label>ID : </label></td>
-                            <td><input type="text" name="id"></td>
+                            <td><input type="text" id="id" name="id"></td>
                         </tr>
                         <tr>
                             <td><label>PW : </label></td>
-                            <td><input type="password" name="passwords"></td>
+                            <td><input type="password" id="passwords" name="passwords"></td>
             
             
                         </tr>
-            
+                        
                         <tr>
-                            <td><input type="submit" value="Submit" name=""></td>
+                            <td><input type="button" id="checkbt" value="check!!" onclick="check()"></td>
+                            <td><input type="submit"  id="mysubmit" value="Submit" name=""></td>
                         </tr>
             
                     </table>
             
                 </form>
             </center>
+            <script>
+                    document.getElementById("mysubmit").disabled = true;
+                    function check() {
+                        if(document.getElementById("id").value.length > 9) {
+                            alert('정상적인 ID 값을 입력했습니다.');
+                            if(document.getElementById("passwords").value.length >= 5) {
+                                alert('정상적인 PW 값을 입력했습니다.');
+                                document.getElementById("mysubmit").disabled = false;
+                            } else {
+                                alert('비정상적인 PW 값을 입력했습니다.');
+                            }
+                        } else {
+                            alert('비정상적인 ID 값을 입력했습니다.');
+                    }
+                };
+            </script>
         </body>
         </html>
