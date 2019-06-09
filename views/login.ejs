@@ -45,7 +45,7 @@
             <script>
                     document.getElementById("mysubmit").disabled = true;
                     function check() {
-                        if(document.getElementById("id").value.length > 9) {
+                        if(document.getElementById("id").value.length > 9 && document.getElementById("id").value.indexOf('@') > 0) {
                             alert('정상적인 ID 값을 입력했습니다.');
                             if(document.getElementById("passwords").value.length >= 5) {
                                 alert('정상적인 PW 값을 입력했습니다.');

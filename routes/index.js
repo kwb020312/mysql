@@ -14,7 +14,7 @@ var pool  = mysql.createPool({
   dateStrings     : 'date'
 });
 
-//  기본 로컬호스트를 보는 페이지
+//  기본 로컬호스트를 보는 페이지 로그인이 되어있다면 회원정보를 호출 아니라면 login페이지
 router.get('/', function(req, res, next) {
 
 pool.getConnection(function(err, conn){
@@ -37,11 +37,12 @@ pool.getConnection(function(err, conn){
   });
 });
 
+// 세션을 삭제시킨후 redirect로 로그인페이지 접속
 router.get('/logout', function(req, res, next) {
 
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;',function(err, results){
-      res.render('logout', { });
+      res.redirect('/');
 
       req.session.destroy();
 
