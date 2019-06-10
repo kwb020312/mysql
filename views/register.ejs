@@ -11,8 +11,95 @@
             display:block;
         }
     </style>
+    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script>
-        
+      
+      function checkall() {
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+
+        var getName= RegExp(/^[가-힣]+$/);
+
+        var getCheck= RegExp(/^[a-zA-Z0-9]{4,12}$/);
+
+        if($("#name").val() == ""){
+          alert("이름을 입력해주세요!");
+          $("#name").focus();
+          return false;
+        }
+
+        if (!getName.test($("#name").val())) {
+          alert("이름을 형식에 맞게 입력해주세요!");
+          $("#name").val("");
+          $("#name").focus();
+          return false;
+        }
+
+        if($("#age").val() == ""){
+          alert("나이를 입력해주세요!");
+          $("#age").focus();
+          return false;
+        }
+
+        if($("#birth").val() == ""){
+          alert("생일을 입력해주세요!");
+          $("#birth").focus();
+          return false;
+        }
+
+        if($("#adress").val() == ""){
+          alert("주소를 입력해주세요!");
+          $("#adress").focus();
+          return false;
+        }
+
+        if($("#post").val() == ""){
+          alert("우편번호를 입력해주세요!");
+          $("#post").focus();
+          return false;
+        }
+
+        if($("#hobby").val() == ""){
+          alert("취미를 입력해주세요!");
+          $("#hobby").focus();
+          return false;
+        }
+
+        if($("#phone").val() == ""){
+          alert("핸드폰 번호를 입력해주세요!");
+          $("#phone").focus();
+          return false;
+        }
+
+        if($("#email").val() == ""){
+          alert("메일을 입력해주세요!");
+          $("#email").focus();
+          return false;
+        }
+
+        if(!getMail.test($("#email").val())){
+          alert("메일을 형식에 맞게 입력해주세요");
+          $("#tbID").val("");
+          $("#tbID").focus();
+          return false;
+        }
+
+        if($("#password").val() == ""){
+          alert("비밀번호를 입력해주세요!");
+          $("#password").focus();
+          return false;
+        }
+
+        if(!getCheck.test($("#password").val())){
+          alert("비밀번호를 형식에 맞게 입력해주세요");
+          $("#tbID").val("");
+          $("#tbID").focus();
+          return false;
+        }
+
+        if($('#password').val() != $('#password2').val()) {
+          alert('비밀번호가 같지 않습니다.');
+        } 
+      }
     </script>
   </head>
   <header>
@@ -22,32 +109,37 @@
   </header>
   <body style="background-color: orange;">
     <form method="POST" action="/login2">
-        <p>이름</p>
-        <input type="text" name="name" placeholder="name">
+      <center>
+        <p>이름  (한글만 지원합니다.)</p>
+        <input type="text" id="name" name="name" placeholder="name">
         <p>나이</p>
-        <input type="number" name="age" placeholder="age">
+        <input type="number" id="age" name="age" placeholder="age">
         <p>당신의 생일</p>
-        <input type="date" name="birth" placeholder="birth">
+        <input type="date" id="birth" name="birth" placeholder="birth">
         <p>집주소</p>
-        <input type="text" name="adress" placeholder="adress">
+        <input type="text" id="adress" name="adress" placeholder="adress">
         <p>우편번호</p>
-        <input type="text" name="post" placeholder="post">
+        <input type="text" id="post" name="post" placeholder="post">
         <p>취미</p>
-        <input type="text" name="hobby" placeholder="hobby">
+        <input type="text" id="hobby" name="hobby" placeholder="hobby">
         <p>핸드폰번호</p>
-        <input type="text" name="phone" placeholder="phone">
+        <input type="text" id="phone" name="phone" placeholder="phone">
         <p>E-Mail</p>
-        <input type="text" name="email" placeholder="Email Address">
+        <input type="text" id="email" name="email" placeholder="Email Address">
         <br>
         <br>
-        <input type="password" name="pw" id="Pass" value=""/ placeholder="password를 입력하세요.">
+        <p>비밀번호는 4글자 이상 12글자 미만으로 입력해주세요.</p>
+        <input type="password" name="pw" id="password" value=""/ placeholder="password를 입력하세요.">
         <br>
-        <input type="password" id="pass2" value=''/ placeholder="한번 더 입력해주세요.">
         <br>
-        <button onclick="passcheck()" style='border:0; background-color: crimson; color:gold;'>비밀번호 를 검사하세요.</button>
-        <p style="color:red;"id='errpass'></p>
         <br>
-        <input type="submit" value="submit!">
+        <input type="password" name='pw2' id='password2' placeholder="비밀번호를 한번 더 입력해주세요.">
+        <br>
+        <br>
+        <input type="button" value="검사하기" onclick="checkall()">
+        <br>
+        <input id="submit" type="submit" value="submit!">
+      </center>
     </form>
   </body>
 </html>

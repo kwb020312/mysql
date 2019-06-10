@@ -61,9 +61,7 @@
               
           </td>
           <td>
-            <form action="/delete" method="POST">
-              <input id="deletebtn" name="" type="submit" value='회원삭제'>
-            </form>
+            <button onclick='remove()'><p>회원아이디 삭제하기</p></button>
           </td>
         </tr>
       <% } %>
@@ -75,5 +73,15 @@
         </button>
       </form>
     </center>
+    
+    <script>
+      
+
+      function remove() {
+        location.href = `/delete?id=<%= results[0].id %>`;
+      }
+    </script>
+    
+    
   </body>
 </html>

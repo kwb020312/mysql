@@ -21,7 +21,7 @@ pool.getConnection(function(err, conn){
   conn.query(`SELECT * FROM player`,function(err, results){
     console.log(`------`);
     console.log(results);
-    let count = 1;
+    let count = 0;
     if (req.session.user_id && req.session.user_pw) {
       const params = {
         ID: req.body.id,
