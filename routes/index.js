@@ -52,43 +52,60 @@ router.get('/logout', function(req, res, next) {
 });
 
 // 회원가입을 하는 페이지로 연결하는 라우터
-// router.get('/register', function(req, res, next) {
+router.get('/register', function(req, res, next) {
 
-//   pool.getConnection(function(err, conn){
-//     conn.query('SELECT * FROM player;',function(err, results){
-//       res.render('register', { });
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM player;',function(err, results){
+      res.render('register', { });
 
-//       conn.release();
-//     });
-//   });
-// });
+      conn.release();
+    });
+  });
+});
+
+
+// 회원을 탈퇴시키는 처리
+router.post('/delete', function(req, res, next) {
+  console.log('------------------------------------');
+  console.log(req.session.user_id);
+  console.log('------------------------------------');
+  pool.getConnection(function(err, conn){
+    conn.query(`DELETE FROM player WHERE email = '${req.session.user_id}'`,function(err, results){
+      req.session.destroy();
+      res.redirect('/');
+
+      conn.release();
+    });
+  });
+});
 
 //  처음 로그인을 시도하는 페이지 ( 회원가입은 현재 미포함)
-// router.post('/login', function(req, res, next) {
-//   pool.getConnection(function(err, conn){
-//     const name = req.body.name ;
-//     const age = req.body.age ;
-//     const birth = req.body.birth ;
-//     const adress = req.body.adress ;
-//     const post = req.body.post ;
-//     const hobby = req.body.hobby ;
-//     const phone = req.body.phone ;
-//     const email = req.body.email ;
-//     const pw = req.body.pw ;
-//     conn.query(`
-//     INSERT INTO player 
-//     (name,age,birth,adress,post,hobby,phone,email,pw) 
-//     VALUES ('${name}',${age},'${birth}','${adress}','${post}','${hobby}','${phone}','${email}',md5('${pw}')); 
-//     `,function(err, results){
-//       if (err) {throw err;
-//       } else {
-//         console.log(`로그인 체크할준비가 완료됨.`);
-//         res.render('login', { });
-//         conn.release();
-//       }
-//     });
-//   });
-// });
+router.post('/login2', function(req, res, next) {
+  pool.getConnection(function(err, conn){
+    const name = req.body.name ;
+    const age = req.body.age ;
+    const birth = req.body.birth ;
+    const adress = req.body.adress ;
+    const post = req.body.post ;
+    const hobby = req.body.hobby ;
+    const phone = req.body.phone ;
+    const email = req.body.email ;
+    const pw = req.body.pw ;
+    conn.query(`
+    INSERT INTO player 
+    (name,age,birth,adress,post,hobby,phone,email,pw) 
+    VALUES ('${name}',${age},'${birth}','${adress}','${post}','${hobby}','${phone}','${email}',md5('${pw}')); 
+    `,function(err, results){
+      if (err) {throw err;
+      } else {
+        console.log(`로그인 체크할준비가 완료됨.`);
+        res.render('login', { });
+        conn.release();
+      }
+    });
+    res.redirect('/');
+  });
+});
 
 // 콘솔로그로 아이디와 비밀번호를 표시하며 DB 에 포함된 아이디 인지 체크한다.
 router.post('/lgcheck', function(req, res, next) {
@@ -109,15 +126,7 @@ router.post('/lgcheck', function(req, res, next) {
       console.log(`로그인 체크할준비가 완료됨.`);
       // ID 와 비밀번호를 체크하는 구문
       if(results.length > 0 ) {
-        res.send(`
-        <center>
-          <h1>ID : ${id} </h1>
-          <br>
-          <br>
-          <h1>PW : ${password} </h1>
-          <a href='/'><h1>리스트로 가기</h1></a>
-        </center>
-        `);
+        res.render('success', {id: id, password : password });
         console.log(`로그인 되었습니다!`);
         
       } else {

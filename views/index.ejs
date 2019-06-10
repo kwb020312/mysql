@@ -8,11 +8,14 @@
         padding: 15px;
       }
     </style>
+    <script>
+      alert('이미 로그인되어있어, 회원정보 보기페이지로 이동합니다.');
+    </script>
   </head>
   <body>
     <table border=1; style="font-size: 18px; border-collapse: collapse">
         <tr>
-            <td>순서</td>
+            <td>ID값</td>
             <td>이름</td>
             <td>나이</td>
             <td>생일</td>
@@ -22,11 +25,12 @@
             <td>핸드폰</td>
             <td>이메일</td>
             <td>비밀번호</td>
+            <td>탈퇴처리</td>
           </tr>
       <% for (const result of results) { %>
         <tr>
           <th>
-            <%= count %> 번째 순서
+            <%= result.id %>
           </th>
           <td>
               <%= result.name %>
@@ -54,7 +58,12 @@
           </td>
           <td>
               <%= result.pw %>
-              <% count ++; %>
+              
+          </td>
+          <td>
+            <form action="/delete" method="POST">
+              <input id="deletebtn" name="" type="submit" value='회원삭제'>
+            </form>
           </td>
         </tr>
       <% } %>

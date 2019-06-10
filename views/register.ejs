@@ -12,17 +12,7 @@
         }
     </style>
     <script>
-        function passcheck() {
-            var Pass = document.getElementById('Pass').value;
-            var pass2 = document.getElementById('pass2').value;
-            if (Pass != pass2) {
-            alert(Pass +'와' +pass2 +'가 일치하지 않습니다.');
-            document.getElementById('errpass').innerHTML = '비밀번호가 일치하는지 확인해주세요.';
-            } else {
-            alert(Pass+'와'+pass2+'가 일치합니다.');
-            document.getElementById('errpass').innerHTML = '비밀번호가'+Pass+'로 설정되었습니다.';
-            }
-        }
+        
     </script>
   </head>
   <header>
@@ -31,7 +21,7 @@
         </div>
   </header>
   <body style="background-color: orange;">
-    <form method="POST" action="/login">
+    <form method="POST" action="/login2">
         <p>이름</p>
         <input type="text" name="name" placeholder="name">
         <p>나이</p>
