@@ -61,7 +61,8 @@
               
           </td>
           <td>
-            <button onclick='remove()'><p>회원아이디 삭제하기</p></button>
+            <a href="/delete?id=<%= result.id %>"><p>회원아이디 삭제하기</p></a>
+            <% count++; %>
           </td>
         </tr>
       <% } %>
@@ -74,13 +75,7 @@
       </form>
     </center>
     
-    <script>
-      
 
-      function remove() {
-        location.href = `/delete?id=<%= results[0].id %>`;
-      }
-    </script>
     
     
   </body>

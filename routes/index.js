@@ -79,6 +79,23 @@ router.post('/delete', function(req, res, next) {
   });
 });
 
+// 회원을 탈퇴시키는 처리
+router.get('/delete', function(req, res, next) {
+  console.log('------------------------------------');
+  console.log(req.query.id);
+  console.log('------------------------------------');
+  pool.getConnection(function(err, conn){
+    conn.query(`DELETE FROM player WHERE id = '${req.query.id}'`,function(err, results){
+      req.session.destroy();
+      res.redirect('/');
+
+      conn.release();
+    });
+  });
+});
+
+
+
 //  처음 로그인을 시도하는 페이지 ( 회원가입은 현재 미포함)
 router.post('/login2', function(req, res, next) {
   pool.getConnection(function(err, conn){
