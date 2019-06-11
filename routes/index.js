@@ -122,7 +122,7 @@ router.get('/mydel', function(req, res, next) {
 
   pool.getConnection(function(err, conn){
     conn.query(`DELETE FROM notice WHERE title ='${req.query.title}';`,function(err, results){
-      res.render('notedel' ,{ user : req.session.user_id , results : results});
+      res.redirect('/notice');
 
       
 
