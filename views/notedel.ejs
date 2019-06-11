@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NoticeDel</title>
+    <style>
+        td,th {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table border=1; style="font-size: 18px; border-collapse: collapse">
+            <tr>
+                <td>글 ID</td>
+                <td>글 제목</td>
+                <td>글 본문</td>
+                <td>글 저자</td>
+            </tr>
+            <% for (const result of results) { %>
+            <tr>
+            <th>
+                <%= result.id %>
+            </th>
+            <td>
+                <%= result.title %>
+            </td>
+            <td>
+                <%= result.description %>
+            </td>
+            <td>
+                <%= result.author %>
+            </td>
+            <td>
+                <a href="mydel?title=<%= result.title %>"><p>삭제하기</p></a>
+            </td>
+            </tr>
+        <% } %>
+        </table>
+    </center>
+        
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notice</title>
+    <style>
+        td,th {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table border=1; style="font-size: 18px; border-collapse: collapse">
+            <tr>
+                <td>ID값</td>
+                <td>제목</td>
+                <td>본문</td>
+                <td>저자</td>
+            </tr>
+        <% for (const result of results) { %>
+            <tr>
+            <th>
+                <%= result.id %>
+            </th>
+            <td>
+                <%= result.title %>
+            </td>
+            <td>
+                <%= result.description %>
+            </td>
+            <td>
+                <%= result.author %>
+            </td>
+            </tr>
+        <% } %>
+        </table>
+        <a href="/write"><h2>글쓰기</h2></a>
+        <a href="/notedel"><h2>내 글 삭제하기</h2></a>
+    </center>
+        
+</body>
+</html>
