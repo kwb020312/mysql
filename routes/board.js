@@ -79,12 +79,43 @@ router.get('/notedel', function(req, res, next) {
     });
   });
 
+
+// 자신의 글을 수정할때 사용하는 라우터
+
+router.get('/update', function(req, res, next) {
+
+  pool.getConnection(function(err, conn){
+    conn.query(`SELECT FROM notice WHERE id ='${req.query.id}';`,function(err, results){
+      res.render('update',{ user: req.session.user_id, results: results , reqid: req.query.id});
+
+      conn.release();
+    });
+  });
+});
+
+// 자신의 글을 수정할때 사용하는 라우터
+
+router.post('/up', function(req, res, next) {
+  const reqid = req.body.reqid;
+  const title = req.body.title;
+  const description = req.body.description;
+  pool.getConnection(function(err, conn){
+    conn.query(`UPDATE notice SET title = '${title}', description = '${description}' WHERE id ='${reqid}';`,function(err, results){
+      res.redirect('/board/notice');
+
+      
+
+      conn.release();
+    });
+  });
+});
+
   // 자신의 글을 삭제할때 l사용하는 라우터
 
 router.get('/mydel', function(req, res, next) {
 
     pool.getConnection(function(err, conn){
-      conn.query(`DELETE FROM notice WHERE title ='${req.query.title}';`,function(err, results){
+      conn.query(`DELETE FROM notice WHERE id ='${req.query.id}';`,function(err, results){
         res.redirect('/board/notice');
   
         
@@ -93,5 +124,7 @@ router.get('/mydel', function(req, res, next) {
       });
     });
   });
+
+
 
 module.exports = router;

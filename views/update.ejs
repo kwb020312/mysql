@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Write</title>
+    <title>Update</title>
 </head>
 <body>
     <center>
-        <form action="/board/notice2" method="POST">
+        <form border=1; action="/board/up" method="POST">
             <table>
                 <tr>
                     <td>
-                        <p>제목을 입력해주세요</p>
+                        <p>수정할 제목을 입력해주세요</p>
                     </td>
                     <td>
-                        <p>본문을 입력해주세요</div></p>    
-                    </td>
+                        <p>수정할 본문을 입력해주세요</p>    
+                    </td>  
                 </tr>
                 <tr>
                     <td>
+                        <input type="text" name="reqid" value="<%= reqid %>" disabled/>
+                    </td>
+                    <td>
                         <input type="text" name="title">
                     </td>
+                </tr>
+                <tr>
                     <td>
                         <textarea name="description" cols="30" rows="10"></textarea>
                     </td>
@@ -29,7 +34,6 @@
                         <input type="submit">
                     </td>
                 </tr>
-                
             </table>
         </form>
     </center>

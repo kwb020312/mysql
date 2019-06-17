@@ -26,7 +26,7 @@
                 <%= result.id %>
             </th>
             <td>
-                <%= result.title %>
+                <a href="/board/update?id=<%= result.id %>"><%= result.title %></a>
             </td>
             <td>
                 <%= result.description %>
@@ -39,6 +39,7 @@
         </table>
         <a href="/board/write"><h2>글쓰기</h2></a>
         <a href="/board/notedel"><h2>내 글 삭제하기</h2></a>
+        <a href="/board/update"><h2>내 글 수정하기</h2></a>
     </center>
         
 </body>
