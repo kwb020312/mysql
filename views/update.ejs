@@ -8,8 +8,8 @@
 </head>
 <body>
     <center>
-        <form border=1; action="/board/up" method="POST">
-            <table>
+        <form action="/board/up" method="POST">
+            <table border=1; >
                 <tr>
                     <td>
                         <p>수정할 제목을 입력해주세요</p>
@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="reqid" value="<%= reqid %>" disabled/>
+                        <input type="text" name="reqid" value="<%= reqid %>" />
                     </td>
                     <td>
                         <input type="text" name="title">
