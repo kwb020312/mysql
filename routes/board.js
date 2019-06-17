@@ -86,16 +86,20 @@ router.get('/notedel', function(req, res, next) {
 
 
 // 자신의 글을 수정할때 사용하는 라우터
-
+3
 router.get('/update', function(req, res, next) {
-
-  pool.getConnection(function(err, conn){
-    conn.query(`SELECT FROM notice WHERE id ='${req.query.id}';`,function(err, results){
-      res.render('update',{ user: req.session.user_id, results: results , reqid: req.query.id});
-
-      conn.release();
+  const title = req.query.title;
+  if(req.query.author != req.session.user_id) {
+    res.render('error');
+  } else {
+    pool.getConnection(function(err, conn){
+      conn.query(`SELECT FROM notice WHERE id ='${req.query.id}';`,function(err, results){
+        res.render('update',{ user: req.session.user_id, results: results , reqid: req.query.id , title : title});
+  
+        conn.release();
+      });
     });
-  });
+  };
 });
 
 // 자신의 글을 수정할때 사용하는 라우터
