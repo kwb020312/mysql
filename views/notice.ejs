@@ -19,6 +19,7 @@
                 <td>제목</td>
                 <td>본문</td>
                 <td>저자</td>
+                <td>삭제하기</td>
             </tr>
         <% for (const result of results) { %>
             <tr>
@@ -33,6 +34,9 @@
             </td>
             <td>
                 <%= result.author %>
+            </td>
+            <td>
+                <a href="/board/notedel?id=<%= result.id %>&author=<%= result.author %>"><p>삭제하기</p></a>
             </td>
             </tr>
         <% } %>

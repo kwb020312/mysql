@@ -65,18 +65,23 @@ router.get('/write', function(req, res, next) {
 
 router.get('/notedel', function(req, res, next) {
 
+  if(req.query.author != req.session.user_id) {
+    res.render('error');
+  } else {
+
     pool.getConnection(function(err, conn){
-      conn.query(`SELECT * FROM notice WHERE author ='${req.session.user_id}';`,function(err, results){
+      conn.query(`DELETE FROM notice WHERE id ='${req.query.id}';`,function(err, results){
         console.log('------------------------------------');
         console.log(results);
         console.log('------------------------------------');
-        res.render('notedel' ,{ user : req.session.user_id , results : results});
-  
-        
-  
+        res.redirect('/board/notice');
+    
+          
+    
         conn.release();
       });
     });
+  };
   });
 
 

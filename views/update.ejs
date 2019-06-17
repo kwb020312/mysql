@@ -9,6 +9,7 @@
 <body>
     <center>
         <form action="/board/up" method="POST">
+                        <input type="hidden" name="reqid" value="<%= reqid %>" />
             <table border=1; >
                 <tr>
                     <td>
@@ -19,9 +20,7 @@
                     </td>  
                 </tr>
                 <tr>
-                    <td>
-                        <input type="text" name="reqid" value="<%= reqid %>" />
-                    </td>
+                    
                     <td>
                         <input type="text" name="title">
                     </td>
