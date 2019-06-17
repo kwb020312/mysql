@@ -89,11 +89,11 @@ router.get('/notedel', function(req, res, next) {
 3
 router.get('/update', function(req, res, next) {
   const title = req.query.title;
-  if(req.query.author != req.session.user_id) {
+  if(req.query.author != req.session.usker_id) {
     res.render('error');
   } else {
     pool.getConnection(function(err, conn){
-      conn.query(`SELECT FROM notice WHERE id ='${req.query.id}';`,function(err, results){
+      conn.query(`SELECT * FROM notice WHERE id ='${req.query.id}';`,function(err, results){
         res.render('update',{ user: req.session.user_id, results: results , reqid: req.query.id , title : title});
   
         conn.release();
