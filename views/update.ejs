@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update</title>
+    <style>
+        input{
+            padding: 20px;
+        }
+        .button{
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+    </style>
 </head>
 <body>
     <center>
@@ -24,13 +33,14 @@
                     <td>
                         <input type="text" name="title" value="<%= title %>">
                     </td>
+                
+                    <td>
+                        <input type="text" name="description" value="<%= description %>">
+                    </td>
                 </tr>
                 <tr>
-                    <td>
-                        <textarea name="description" cols="30" rows="10"></textarea>
-                    </td>
-                    <td>
-                        <input type="submit">
+                    <td colspan="2">
+                        <input class="button" type="submit">
                     </td>
                 </tr>
             </table>
