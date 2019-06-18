@@ -1,18 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const mysql = require('mysql');
+
 const bodyParser = require('body-parser');
 const app = express;
+const pool = require('../config/dbconfig');
 
-// 내 DB 의 값 가져오기
-var pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : '111111',
-  database        : 'kimwoobin',
-  dateStrings     : 'date'
-});
 
 //  기본 로컬호스트를 보는 페이지 로그인이 되어있다면 회원정보를 호출 아니라면 login페이지
 router.get('/', function(req, res, next) {

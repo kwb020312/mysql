@@ -1,18 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const app = express;
 
-// 내 DB 의 값 가져오기
-var pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : '111111',
-  database        : 'kimwoobin',
-  dateStrings     : 'date'
-});
+const pool = require('../config/dbconfig');
 
 // 게시판으로 이동할때의 라우터
 
@@ -20,7 +11,7 @@ router.get('/notice', function(req, res, next) {
 
     pool.getConnection(function(err, conn){
       conn.query('SELECT * FROM notice;',function(err, results){
-        res.render('notice', { results: results });
+        res.render('board/notice', { results: results });
   
         
   
@@ -52,7 +43,7 @@ router.get('/write', function(req, res, next) {
 
     pool.getConnection(function(err, conn){
       conn.query('SELECT * FROM notice;',function(err, results){
-        res.render('write' ,{ user : req.session.user_id });
+        res.render('board/write' ,{ user : req.session.user_id });
   
         
   
@@ -66,7 +57,7 @@ router.get('/write', function(req, res, next) {
 router.get('/notedel', function(req, res, next) {
 
   if(req.query.author != req.session.user_id) {
-    res.render('error');
+    res.render('/board/error');
   } else {
 
     pool.getConnection(function(err, conn){
@@ -91,11 +82,11 @@ router.get('/update', function(req, res, next) {
   const title = req.query.title;
   const description = req.query.description;
   if(req.query.author != req.session.user_id) {
-    res.render('error');
+    res.render('board/error');
   } else {
     pool.getConnection(function(err, conn){
       conn.query(`SELECT * FROM notice WHERE id ='${req.query.id}';`,function(err, results){
-        res.render('update',{ user: req.session.user_id, results: results , reqid: req.query.id , title : title , description : description});
+        res.render('board/update',{ user: req.session.user_id, results: results , reqid: req.query.id , title : title , description : description});
   
         conn.release();
       });
@@ -120,7 +111,25 @@ router.post('/up', function(req, res, next) {
   });
 });
 
-  // 자신의 글을 삭제할때 l사용하는 라우터
+// 자신의 글을 자세히볼때 사용하는 라우터
+
+router.get('/detail', function(req, res, next) {
+  const id = req.query.id;
+  const title = req.query.title;
+  const description = req.query.description;
+  pool.getConnection(function(err, conn){
+    conn.query(`SELECT c.email , c.description FROM notice AS n LEFT JOIN comments AS c ON n.id = c.n_id WHERE n_id =${id};`,function(err, results){
+      res.render('board/detail' , {id:id , results : results ,title : title , description : description});
+
+      
+
+      conn.release();
+    });
+  });
+});
+
+
+  // 자신의 글을 삭제할때 사용하는 라우터
 
 router.get('/mydel', function(req, res, next) {
 
@@ -128,6 +137,21 @@ router.get('/mydel', function(req, res, next) {
       conn.query(`DELETE FROM notice WHERE id ='${req.query.id}';`,function(err, results){
         res.redirect('/board/notice');
   
+        
+  
+        conn.release();
+      });
+    });
+  });
+
+  // 댓글을 등록할 때 사용하는 라우터
+
+  router.post('/comment', function(req, res, next) {
+    const n_id = req.body.n_id;
+    const comment = req.body.comment;
+    pool.getConnection(function(err, conn){
+      conn.query(`INSERT INTO comments (n_id , email , description) VALUES ('${n_id}','${req.session.user_id}','${comment}');`,function(err, results){
+        res.redirect('/board/notice');
         
   
         conn.release();

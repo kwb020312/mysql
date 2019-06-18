@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detail</title>
+    <style>
+        div {
+            padding-top:50px;
+        }
+        h1 {
+            color: brown;
+        }
+        h2 {
+            padding-bottom:100px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div>
+            <table>
+                <td>
+                    <tr>
+                        <h1>제목</h1>
+                    </tr>
+                    <tr>
+                        <h2><%= title %></h2>
+                    </tr>
+                </td>
+                <td>
+                    <tr>
+                        <h1>본문</h1>
+                    </tr>
+                    <tr>
+                        <h2><%= description %></h2>
+                    </tr>
+                </td>
+                <% for (const result of results) { %>
+                    <td>
+                        <tr>
+                            <h1>댓글</h1>
+                        </tr>
+                        <tr>
+                            <h2><%= result.email %></h2>
+                            <h2><%= result.description %></h2>
+                        </tr>
+                    </td>
+                <% } %>
+                <td>
+                    <form action="/board/comment" method="POST">
+                        <input type="hidden" name="n_id" value="<%= id %>">
+                        <textarea name="comment" cols="30" rows="10">댓글을 입력해주세요.</textarea>
+                        <input type="submit">
+                    </form>
+                </td>
+            </table>
+        </div>
+    </center>
+</body>
+</html>
