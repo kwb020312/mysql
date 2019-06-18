@@ -117,9 +117,15 @@ router.get('/detail', function(req, res, next) {
   const id = req.query.id;
   const title = req.query.title;
   const description = req.query.description;
+  const author = req.query.author;
   pool.getConnection(function(err, conn){
     conn.query(`SELECT c.email , c.description FROM notice AS n LEFT JOIN comments AS c ON n.id = c.n_id WHERE n_id =${id};`,function(err, results){
-      res.render('board/detail' , {id:id , results : results ,title : title , description : description});
+      conn.query(`SELECT count(n_id) AS c FROM comments WHERE n_id = ${id};`,function(err, counter){
+        conn.query(`SELECT * FROM notice WHERE id ='${id}';`,function(err, use){
+          res.render('board/detail' , {id:id , results : results ,title : title , description : description , counter : counter , use : use , author : author});
+        });
+     });
+      
 
       
 
@@ -149,9 +155,12 @@ router.get('/mydel', function(req, res, next) {
   router.post('/comment', function(req, res, next) {
     const n_id = req.body.n_id;
     const comment = req.body.comment;
+    const title = req.body.title;
+    const description = req.body.description;
+    const author = req.body.author;
     pool.getConnection(function(err, conn){
       conn.query(`INSERT INTO comments (n_id , email , description) VALUES ('${n_id}','${req.session.user_id}','${comment}');`,function(err, results){
-        res.redirect('/board/notice');
+        res.redirect(`/board/detail?id=${n_id}&title=${title}&description=${description}&author=${author}`);
         
   
         conn.release();

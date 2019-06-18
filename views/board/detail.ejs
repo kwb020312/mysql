@@ -13,12 +13,20 @@
             color: brown;
         }
         h2 {
-            padding-bottom:100px;
+            padding-bottom:30px;
+        }
+        .com {
+            float:right;
+            padding-left: 30px; 
         }
     </style>
 </head>
 <body>
     <center>
+        <h2 class="com">댓글 수 : <%= counter[0].c %></h2 class="com">
+        <a href="/board/update?id=<%= id %>&title=<%= title %>&description=<%= description %>&author=<%= author %>"><h2 class="com">수정하기</h2></a>
+        <br>
+        <br>
         <div>
             <table>
                 <td>
@@ -36,12 +44,12 @@
                     <tr>
                         <h2><%= description %></h2>
                     </tr>
+                    <tr>
+                        <h1>댓글</h1>
+                    </tr>
                 </td>
                 <% for (const result of results) { %>
                     <td>
-                        <tr>
-                            <h1>댓글</h1>
-                        </tr>
                         <tr>
                             <h2><%= result.email %></h2>
                             <h2><%= result.description %></h2>
@@ -50,6 +58,9 @@
                 <% } %>
                 <td>
                     <form action="/board/comment" method="POST">
+                        <input type="hidden" name="author" value="<%= author %>">
+                        <input type="hidden" name="description" value="<%= description %>">
+                        <input type="hidden" name="title" value="<%= title %>">
                         <input type="hidden" name="n_id" value="<%= id %>">
                         <textarea name="comment" cols="30" rows="10">댓글을 입력해주세요.</textarea>
                         <input type="submit">
