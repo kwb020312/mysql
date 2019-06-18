@@ -30,7 +30,7 @@
                 <a href="/board/update?id=<%= result.id %>&title=<%= result.title %>&description=<%= result.description %>&author=<%= result.author %>"><%= result.title %></a>
             </td>
             <td>
-                <a href="/board/detail?id=<%= result.id %>&title=<%= result.title %>&description=<%= result.description %>&author=<%= result.author %>"><%= result.description %></a>
+                <a href="/board/detail?id=<%= result.id %>&title=<%= result.title %>&description=<%= result.description %>&author=<%= result.author %>"><%= result.description %></a> {<%= result.commentCnt %>}
             </td>
             <td>
                 <%= result.author %>
