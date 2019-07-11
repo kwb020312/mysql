@@ -8,11 +8,9 @@ const pool = require('../config/dbconfig');
 // 게시판으로 이동할때의 라우터
 
 router.get('/notice', function(req, res, next) {
-
     pool.getConnection(function(err, conn){
       conn.query('SELECT a.*, (SELECT COUNT(*) FROM comments WHERE n_id=a.id) AS commentCnt FROM notice AS a;',function(err, results){
         res.render('board/notice', { results: results });
-  
         
   
         conn.release();

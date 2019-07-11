@@ -1,13 +1,17 @@
-var express = require('express');
+    
+const express = require('express');
 const passport = require('passport');
-var router = express.Router();
 
+const router = express.Router();
+
+// 카카오 인증 해주세요.
 router.get('/kakao', passport.authenticate('kakao'));
 
+// 성공했으면 이쪽으로!
 router.get('/kakao/callback', passport.authenticate('kakao', {
-   failureRedirect: '/',
+  failureRedirect: '/',
 }), (req, res) => {
-   res.redirect('/');
+  res.redirect('/');
 });
 
 module.exports = router;

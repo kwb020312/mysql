@@ -8,21 +8,23 @@ const pool = require('../config/dbconfig');
 
 //  기본 로컬호스트를 보는 페이지 로그인이 되어있다면 회원정보를 호출 아니라면 login페이지
 router.get('/', function(req, res, next) {
-
 pool.getConnection(function(err, conn){
   conn.query(`SELECT * FROM player`,function(err, results){
-    console.log(`------`);
-    console.log(results);
     let count = 0;
     if (req.session.user_id && req.session.user_pw) {
-      const params = {
-        ID: req.body.id,
-        PW: req.body.passwords
-      };
       res.render('index', {results: results, count : count});
-    } else {
+      } else if (req.user) {
+        res.render('index', {results: results, count : count});
+      } else {
       res.render('login', { title: '로그인' });
-    }
+      }
+    // let count = 0;
+    // if (req.session.user_id && req.session.user_pw) {
+    //   const params = {
+    //     ID: req.body.id,
+    //     PW: req.body.passwords
+    //   }
+    // } else if (req.session.passport.)
 
     conn.release();
     });
