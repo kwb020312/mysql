@@ -9,6 +9,13 @@ const pool = require('../config/dbconfig');
 
 router.get('/notice', function(req, res, next) {
     pool.getConnection(function(err, conn){
+      // 만약 serializeUser 의 값이 있다면 의 처리방법
+      if (req.user) {
+        // req.user 의 값은 deserializeUser 의 값과 동일하다
+        console.log('------------------------------------');
+        console.log(req.user[0].email);
+        console.log('------------------------------------');
+      }
       conn.query('SELECT a.*, (SELECT COUNT(*) FROM comments WHERE n_id=a.id) AS commentCnt FROM notice AS a;',function(err, results){
         res.render('board/notice', { results: results });
         
@@ -41,6 +48,9 @@ router.get('/write', function(req, res, next) {
 
     pool.getConnection(function(err, conn){
       conn.query('SELECT * FROM notice;',function(err, results){
+        if (req.user) {
+          res.render('board/write' ,{ user : req.user[0].email });
+        }
         res.render('board/write' ,{ user : req.session.user_id });
   
         
@@ -53,7 +63,26 @@ router.get('/write', function(req, res, next) {
   // 자신의 글을 삭제할때 사용하는 라우터
 
 router.get('/notedel', function(req, res, next) {
-
+  // 카카오와 연동이 되어있다면
+  if(req.user) {
+    if(req.query.author != req.user[0].email) {
+      res.render('/board/error');
+    } else {
+      pool.getConnection(function(err, conn){
+        conn.query(`DELETE FROM notice WHERE id ='${req.query.id}';`,function(err, results){
+          console.log('------------------------------------');
+          console.log(results);
+          console.log('------------------------------------');
+          res.redirect('/board/notice');
+      
+            
+      
+          conn.release();
+        });
+      });
+    }
+  } else {
+    // 카카오와 연동된 상태가 아니라면
   if(req.query.author != req.session.user_id) {
     res.render('/board/error');
   } else {
@@ -71,14 +100,30 @@ router.get('/notedel', function(req, res, next) {
       });
     });
   };
+  }
+  
   });
 
 
 // 자신의 글을 수정할때 사용하는 라우터
-3
 router.get('/update', function(req, res, next) {
   const title = req.query.title;
   const description = req.query.description;
+  // 카카오와 연동되어있을경우
+  if (req.user) {
+    if(req.query.author != req.user[0].email) {
+      res.render('board/error');
+    } else {
+      pool.getConnection(function(err, conn){
+        conn.query(`SELECT * FROM notice WHERE id ='${req.query.id}';`,function(err, results){
+          res.render('board/update',{ user: req.user[0].email, results: results , reqid: req.query.id , title : title , description : description});
+    
+          conn.release();
+        });
+      });
+    };
+  } else {
+    // 카카오와 연동되어있지 않을경우
   if(req.query.author != req.session.user_id) {
     res.render('board/error');
   } else {
@@ -90,6 +135,8 @@ router.get('/update', function(req, res, next) {
       });
     });
   };
+  }
+  
 });
 
 // 자신의 글을 수정할때 사용하는 라우터
@@ -156,14 +203,29 @@ router.get('/mydel', function(req, res, next) {
     const title = req.body.title;
     const description = req.body.description;
     const author = req.body.author;
-    pool.getConnection(function(err, conn){
-      conn.query(`INSERT INTO comments (n_id , email , description) VALUES ('${n_id}','${req.session.user_id}','${comment}');`,function(err, results){
-        res.redirect(`/board/detail?id=${n_id}&title=${title}&description=${description}&author=${author}`);
-        
-  
-        conn.release();
+    // 카카오와 연동되어있을 경우
+    if (req.user) {
+      pool.getConnection(function(err, conn){
+        conn.query(`INSERT INTO comments (n_id , email , description) VALUES ('${n_id}','${req.user[0].email}','${comment}');`,function(err, results){
+          res.redirect(`/board/detail?id=${n_id}&title=${title}&description=${description}&author=${author}`);
+          
+    
+          conn.release();
+        });
       });
-    });
+    } else {
+      // 카카오와 연동되어 있지 않을 경우
+      pool.getConnection(function(err, conn){
+        conn.query(`INSERT INTO comments (n_id , email , description) VALUES ('${n_id}','${req.session.user_id}','${comment}');`,function(err, results){
+          res.redirect(`/board/detail?id=${n_id}&title=${title}&description=${description}&author=${author}`);
+          
+    
+          conn.release();
+        });
+      });
+    }
+    
+    
   });
 
 

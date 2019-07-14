@@ -11,7 +11,7 @@ module.exports = (passport) => {
         done(null, user);
     });
     
-    // deserializeUser는 세션에 저장한 아이디를 통해 사용자 정보를 불러오는 것 
+    // deserializeUser 란 serializeUser 의 값을 물려받아 '매번' 호출해준다
     passport.deserializeUser((user, done) => {
 
         console.log('---------------deserializeUser---------------------');

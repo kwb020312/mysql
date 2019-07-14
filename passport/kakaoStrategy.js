@@ -13,6 +13,7 @@ module.exports = (passport) => {
       callbackURL: '/auth/kakao/callback',
     }, async (acessToken, refreshToken, profile, done) => {
       try {
+        // 카카오 계정의 아이디, 이메일, 이름 값 등등을 테스트함
         console.log('------------------------------------');
         console.log(`-----profile : ${profile.id}-----`);
         console.log(`-----profile : ${profile._json && profile._json.kaccount_email}-----`);
