@@ -1,7 +1,7 @@
 // const local = require('./localStrategy');
 const express = require('express');
 const kakao = require('./kakaoStrategy');
-const pool = require('../config/dbconfig');
+const pool = require('../config_test/dbconfig');
 
 module.exports = (passport) => {
     console.log(`----- index start -----`);   

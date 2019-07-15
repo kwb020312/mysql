@@ -1,5 +1,5 @@
 const KakaoStrategy = require('passport-kakao').Strategy;
-const pool = require('../config/dbconfig');
+const pool = require('../config_test/dbconfig');
 
 // const { User } = require('../models');
 

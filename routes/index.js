@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 const bodyParser = require('body-parser');
 const app = express;
-const pool = require('../config/dbconfig');
+var pool = require('../config_test/dbconfig');
 
 
 
 //  기본 로컬호스트를 보는 페이지 로그인이 되어있다면 회원정보를 호출 아니라면 login페이지
 router.get('/', function(req, res, next) {
 pool.getConnection(function(err, conn){
-  conn.query(`SELECT * FROM player`,function(err, results){
+  conn.query(`SELECT * FROM player;`,function(err, results){
     let count = 0;
     if (req.session.user_id && req.session.user_pw) {
       res.render('index', {results: results, count : count});

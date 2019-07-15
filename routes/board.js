@@ -3,7 +3,7 @@ var router = express.Router();
 const bodyParser = require('body-parser');
 const app = express;
 
-const pool = require('../config/dbconfig');
+const pool = require('../config_test/dbconfig');
 
 // 게시판으로 이동할때의 라우터
 
