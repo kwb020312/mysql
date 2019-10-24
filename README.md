@@ -17,7 +17,6 @@
 <p>게시판</p>
 
 ---
-
 <img src='sql_desc.JPG'>
 <p>조회 및 댓글</p>
 
