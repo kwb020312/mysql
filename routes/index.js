@@ -14,6 +14,7 @@ pool.getConnection(function(err, conn){
     if (req.session.user_id && req.session.user_pw) {
       res.render('index', {results: results, count : count});
       } else if (req.user) {
+        req.session.user_id = req.user[0].email;
         res.render('index', {results: results, count : count});
       } else {
       res.render('login', { title: '로그인' });
